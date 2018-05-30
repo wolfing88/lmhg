@@ -62,7 +62,7 @@ const router = (...props) => (
       transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}
     >
 
-      <Scene key={'home'} component={Test} />
+      <Scene key={'Tes'} component={Test} />
     </Modal>
   </Router>
 );
