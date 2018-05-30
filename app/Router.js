@@ -44,7 +44,7 @@ const getSceneStyle = () => ({
 
 const onBackPress = () => {
   console.log(Actions.state);
-  if (Actions.state.index !== 0) {
+  if (Actions.state.index == 0) {
     return false
   }
   Actions.pop()
