@@ -21,13 +21,7 @@ import {
 } from 'react-native-router-flux';
 import { Theme } from 'teaset';
 
-import TabIcon from './Component/TabIcon';
-// import TabMiddleIcon from './Component/TabMiddleIcon'
-
-import Test from './Pages/Test';
-
-
-
+import Home from './Pages/Home';
 
 
 const reducerCreate = params => {
@@ -43,7 +37,6 @@ const getSceneStyle = () => ({
 });
 
 const onBackPress = () => {
-  console.log(Actions.state);
   if (Actions.state.index == 0) {
     return false
   }
@@ -56,13 +49,11 @@ const router = (...props) => (
           getSceneStyle={getSceneStyle}
           backAndroidHandler={onBackPress}
   >
-
     <Modal
       hideNavBar
       transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}
     >
-
-      <Scene key={'home'} component={Test} />
+      <Scene key={'home'} component={Home} />
     </Modal>
   </Router>
 );
