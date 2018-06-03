@@ -8,7 +8,6 @@ import {
   Text,
   View,
   Image,
-
   TouchableOpacity,
 } from 'react-native';
 
@@ -19,9 +18,33 @@ export default class Fxqg extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    // let userData = await AsyncStorage.getItem('USER_TOKEN');
+    this.getUserInfo();
   }
+
+  // componentDidMount () {
+  //   this.getUserInfo();
+  // }
+
+
+
+  async getUserInfo(){
+    let userName = await AsyncStorage.getItem('FX_USER_NAME');
+    let password = await AsyncStorage.getItem('FX_USER_PASSWORD');
+    if(isNotEmpty(userName)&& isNotEmpty(password)){
+      console(userName)
+
+    }else{
+      await AsyncStorage.setItem("FX_USER_NAME","test");
+      await AsyncStorage.setItem("FX_USER_PASSWORD","test123");
+    }
+
+  }
+
+
+
   render() {
-    console.log(this.imageUrl);
     return (
       <View style={styles.container}>
         <LoginView isPass={true}

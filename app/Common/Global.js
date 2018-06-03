@@ -11,7 +11,7 @@ import { Actions } from "react-native-router-flux";
 // 处理安卓，iOS字体不同的类，使用方法 fontSize:FONT_SIZE(20)
 import FontSize from './FontSize';
 // 处理安卓，iOS宽高的区别，使用方法 width:px2dp(20)
-import { px2dp } from './Tool';
+import { px2dp,isNotEmpty } from './Tool';
 
 // teaset中提供的一些常用方法
 import { Theme, Toast } from 'teaset';
@@ -56,5 +56,7 @@ global.Alert = Alert;
 global.AsyncStorage = AsyncStorage;
 // 弹框Toast
 global.Toast = Toast;
+//判断是否为空
+global.isNotEmpty = isNotEmpty;
 
 
