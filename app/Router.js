@@ -22,6 +22,7 @@ import {
 import { Theme } from 'teaset';
 
 import Home from './Pages/Home';
+import Fxqg from './Pages/Fxqg'
 
 
 const reducerCreate = params => {
@@ -50,10 +51,10 @@ const router = (...props) => (
           backAndroidHandler={onBackPress}
   >
     <Modal
-      hideNavBar
       transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}
     >
-      <Scene key={'home'} component={Home} />
+      <Scene hideNavBar key={'Home'} component={Home} />
+      <Scene key={'Fxqg'} component={Fxqg} title={'斐讯抢购'} />
     </Modal>
   </Router>
 );

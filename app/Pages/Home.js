@@ -3,11 +3,13 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } from 'react-native'
 
 import React, {Component} from 'react';
 import CarouselView from '../Component/CarouselView';
 import MarqueeLabel from 'react-native-lahk-marquee-label';
+import Fxqg from './Fxqg'
 
 
 export default class Home extends Component {
@@ -42,32 +44,52 @@ export default class Home extends Component {
 }
 
 class Botton extends Component{
+
+  constructor (props){
+    super(props);
+    this.state= {
+      bottonList: [
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+        { "title": "test", "router": "lm" ,"img":Images.Main},
+      ]
+    }
+  }
+
+
+  //跳转
+  toJump=(data)=>{
+     Actions.Fxqg();
+
+
+  }
+
+
   render(){
+    let bottons = this.state.bottonList && this.state.bottonList.map((data,index)=>{
+      return (
+        <TouchableOpacity key={index} style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/5.5,}} onPress={()=>{this.toJump(data)}}>
+          <View style={{backgroundColor:'#FFF',margin:px2dp(2),borderRadius:px2dp(5)}}>
+            <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4,justifyContent:'center',alignItems:'center'}}>
+              <Image  style={{flex:1}} resizeMode={'contain'}  source={data.img}   />
+            </View>
+            <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/5.5 - SCREEN_WIDTH/4,justifyContent:'center',alignItems:'center',paddingBottom:px2dp(30)}}>
+              <Text style={{fontSize:px2dp(30)}}>{data.title}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      )
+    })
     return(
-      <View style={{position:'absolute',bottom:0,flexDirection:'row',flexWrap:'wrap'}}>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
-          <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
-          </View>
-        </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
-          <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
-          </View>
-        </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
-          <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
-          </View>
-        </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
-          <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
-          </View>
-        </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
-          <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
-          </View>
-        </View>test
-
-
-
+      <View style={{position:'absolute',bottom:0,flexDirection:'row',flexWrap:'wrap',backgroundColor:'#eeeeef'}}>
+        {
+          bottons
+        }
       </View>
     )
   }
