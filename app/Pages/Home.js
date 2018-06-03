@@ -33,7 +33,7 @@ export default class Home extends Component {
         <MarqueeLabel
           duration={8000}
           text={'This is a Marquee Label.'}
-          textStyle={{ fontSize: 13, color: '#e5e' }}
+          textStyle={{ fontSize: FONT_SIZE(13), color: '#6f6' }}
         />
         <Botton />
       </View>
@@ -45,30 +45,27 @@ class Botton extends Component{
   render(){
     return(
       <View style={{position:'absolute',bottom:0,flexDirection:'row',flexWrap:'wrap'}}>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/6.5}}>
+        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
           <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
           </View>
         </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/6.5}}>
+        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
           <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
           </View>
         </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/6.5}}>
+        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
           <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
           </View>
         </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/6.5}}>
+        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
           <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
           </View>
         </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/6.5}}>
+        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
           <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
           </View>
         </View>
-        <View style={{width:SCREEN_WIDTH/4,height:SCREEN_HEIGHT/6.5}}>
-          <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
-          </View>
-        </View>
+
 
 
       </View>
