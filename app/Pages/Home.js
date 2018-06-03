@@ -64,7 +64,7 @@ class Botton extends Component{
         <View style={{width:SCREEN_WIDTH/4,height:SCREEN_WIDTH/4}}>
           <View style={{flex:1,backgroundColor:'#e6e',margin:px2dp(2),borderRadius:px2dp(5)}}>
           </View>
-        </View>
+        </View>test
 
 
 
