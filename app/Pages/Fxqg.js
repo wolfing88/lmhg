@@ -24,24 +24,14 @@ export default class Fxqg extends Component {
     console.log(this.imageUrl);
     return (
       <View style={styles.container}>
-        <SegmentedView style={{height:SCREEN_HEIGHT - 64 ,marginTop:64, backgroundColor:'#F9F9F9'}}
-                       type='carousel'
-                       indicatorLineColor={'#ff7000'}
-        >
-          <SegmentedView.Sheet title='登录'
-                               titleStyle={{color:'#333'}}
-                               activeTitleStyle={{color:'#000'}}
-          >
-            <LoginView isPass={true}
-                       onPress={()=>this.onLoginPress(2)}
-                       onChangeTopText={(text)=>{
-                       }}
-                       onChangeBottomText={(text)=>{
-                       }}
-            />
+        <LoginView isPass={true}
+                   onPress={()=>this.onLoginPress(2)}
+                   onChangeTopText={(text)=>{
+                   }}
+                   onChangeBottomText={(text)=>{
+                   }}
+        />
 
-          </SegmentedView.Sheet>
-        </SegmentedView>
       </View>
     );
   }
@@ -51,21 +41,14 @@ export default class Fxqg extends Component {
 const LoginView = (props) => {
   return(
     <View style={styles.loginViewStyle}>
-      <LoginInput placeholder='请输入手机号'
+      <LoginInput placeholder='请输入斐讯商城账号'
+                  secureTextEntry={false}
                   onChangeText={props.onChangeTopText}
       />
-      <View>
-        <LoginInput placeholder='请输入密码'
-                    onChangeText={props.onChangeBottomText}
-        />
-        <View style={{
-          backgroundColor:Theme.transparentColor,
-          justifyContent:'flex-end',
-          alignItems:'flex-end',
-
-        }}>
-        </View>
-      </View>
+      <LoginInput placeholder='请输入斐讯商城密码'
+                  secureTextEntry={true}
+                  onChangeText={props.onChangeBottomText}
+      />
       <Button title={'登录'}
               style={styles.loginButtonStyle}
               titleStyle={{fontSize:FONT_SIZE(14), color:'#fff'}}
@@ -81,7 +64,7 @@ const LoginInput = (props) => {
     <View style={styles.inputViewStyle}>
       <Input placeholder={props.placeholder}
              style={styles.inputStyle}
-             secureTextEntry={false}
+             secureTextEntry={props.secureTextEntry}
              onChangeText={props.onChangeText}
              onFocus={props.onFocus}
              onBlur={props.onBlur}
@@ -89,13 +72,6 @@ const LoginInput = (props) => {
              autoCapitalize='none'
              clearButtonMode={'always'}
       />
-      {
-        props.isVerify ?
-          <TouchableOpacity onPress={props.styles}>
-            <Text style={styles.inputTitleStyle}>获取验证码</Text>
-          </TouchableOpacity>
-          :null
-      }
     </View>
   )
 }
@@ -107,7 +83,7 @@ const styles = StyleSheet.create({
   },
   loginViewStyle:{
     // backgroundColor:'red',
-    marginTop:px2dp(80)
+    marginTop:px2dp(220)
   },
   loginButtonStyle:{
     marginLeft:px2dp(108),
