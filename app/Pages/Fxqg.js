@@ -47,9 +47,18 @@ export default class Fxqg extends Component {
 
    login=()=>{
     ShowLoading();
-    FX.login('luo', '131').then((map)=> {
-      // HideLoading();
-      alert(map['result']);}
+    let userName = this.state.userName;
+    let password = this.state.password;
+    FX.login(userName, password).then((map)=> {
+        HideLoading();
+        if(map['code'] == 'success'){
+          AsyncStorage.setItem("FX_USER_NAME",userName);
+          AsyncStorage.setItem("FX_USER_PASSWORD",password);
+
+        }else{
+          Toast.fail(map['result']);
+        }
+      }
     );
   }
 
