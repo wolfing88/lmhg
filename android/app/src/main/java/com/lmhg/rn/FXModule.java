@@ -10,6 +10,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.lmhg.util.HttpUtil;
+import com.lmhg.util.IP;
 
 /**
  * Created by tao on 2017/6/12.
@@ -36,10 +37,9 @@ public class FXModule extends ReactContextBaseJavaModule implements Application.
         new Thread() {
             @Override
             public void run() {
-                WritableMap map = HttpUtil.getCookies("https://www.phimall.com/passport-post_login.html",
-                        "uname=13392619771&password=a871124","X-Requested-With:XMLHttpRequest##User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
+                WritableMap map = HttpUtil.getCookies(IP.FX_LOGIN,
+                        "uname="+ userName +"&password="+ password ,"X-Requested-With:XMLHttpRequest##User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
                         ,"","POST","UTF-8",8000);
-
                 promise.resolve(map);
             }}.start();
     }
