@@ -12,12 +12,34 @@ import {
   View
 } from 'react-native';
 
+
 import Router from './app/Router';
+import LoadingView from './app/Component/LoadingView'
+
+window.ShowLoading = () => {
+  if (window.LoadingView)
+    return window.LoadingView.show();
+};
+window.HideLoading = () => {
+  if (window.LoadingView)
+    return window.LoadingView.hide();
+};
+
 
 export default class App extends Component<{}> {
   render() {
     return (
-      <Router/>
+      <View style={{
+        flex: 1,
+        backgroundColor: 'transparent'
+      }}>
+        <Router/>
+        <LoadingView ref={(ref) => {
+          window.LoadingView = ref;
+        }}/>
+      </View>
     );
   }
 }
+
+

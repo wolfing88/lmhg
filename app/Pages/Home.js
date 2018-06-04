@@ -9,7 +9,6 @@ import {
 import React, {Component} from 'react';
 import CarouselView from '../Component/CarouselView';
 import MarqueeLabel from 'react-native-lahk-marquee-label';
-import Fxqg from './Fxqg'
 
 
 export default class Home extends Component {
@@ -65,8 +64,6 @@ class Botton extends Component{
   //跳转
   toJump=(data)=>{
      Actions.Fxqg();
-
-
   }
 
 

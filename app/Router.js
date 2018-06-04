@@ -54,7 +54,7 @@ const router = (...props) => (
       transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}
     >
       <Scene hideNavBar key={'Home'} component={Home} />
-      <Scene key={'Fxqg'} component={Fxqg} title={'斐讯抢购'} />
+      <Scene key={'Fxqg'} component={Fxqg} title={'test'} />
     </Modal>
   </Router>
 );

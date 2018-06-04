@@ -58,5 +58,7 @@ global.AsyncStorage = AsyncStorage;
 global.Toast = Toast;
 //判断是否为空
 global.isNotEmpty = isNotEmpty;
+//是否锁定返回键
+global.isLockBack = false;
 
 

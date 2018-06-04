@@ -10,6 +10,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {FX} from '../nativeModules';
 
 import { SegmentedView, Button, NavigationBar, Overlay, Input , } from 'teaset';
 
@@ -17,29 +18,33 @@ import { SegmentedView, Button, NavigationBar, Overlay, Input , } from 'teaset';
 export default class Fxqg extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-
-    // let userData = await AsyncStorage.getItem('USER_TOKEN');
+    this.state = {
+      userName : undefined,
+      password : undefined,
+    };
     this.getUserInfo();
   }
-
-  // componentDidMount () {
-  //   this.getUserInfo();
-  // }
-
 
 
   async getUserInfo(){
     let userName = await AsyncStorage.getItem('FX_USER_NAME');
     let password = await AsyncStorage.getItem('FX_USER_PASSWORD');
     if(isNotEmpty(userName)&& isNotEmpty(password)){
-      console(userName)
-
-    }else{
-      await AsyncStorage.setItem("FX_USER_NAME","test");
-      await AsyncStorage.setItem("FX_USER_PASSWORD","test123");
+      this.setState({
+        userName : userName,
+        password:password
+      })
     }
+    // await AsyncStorage.setItem("FX_USER_NAME","test");
+    // await AsyncStorage.setItem("FX_USER_PASSWORD","test123");
+  }
 
+   login=()=>{
+    ShowLoading();
+    // FX.login('luo', '131').then((map)=> {
+      //HideLoading();
+      // alert(map['result']);}
+    // );
   }
 
 
@@ -48,29 +53,35 @@ export default class Fxqg extends Component {
     return (
       <View style={styles.container}>
         <LoginView isPass={true}
-                   onPress={()=>this.onLoginPress(2)}
-                   onChangeTopText={(text)=>{
+                   userName={this.state.userName}
+                   password={this.state.password}
+                   onPress={()=>this.login()}
+                   onChangeUserNameText={(text)=>{
+                     this.state.userName=text;
                    }}
-                   onChangeBottomText={(text)=>{
+                   onChangePassWordText={(text)=>{
+                     this.state.password=text;
                    }}
         />
-
       </View>
     );
   }
 }
 
 
+
 const LoginView = (props) => {
   return(
     <View style={styles.loginViewStyle}>
-      <LoginInput placeholder='请输入斐讯商城账号'
+      <LoginInput placeholder='请输入账号'
+                  defaultValue={props.userName}
                   secureTextEntry={false}
-                  onChangeText={props.onChangeTopText}
+                  onChangeText={props.onChangeUserNameText}
       />
-      <LoginInput placeholder='请输入斐讯商城密码'
+      <LoginInput placeholder='请输入密码'
+                  defaultValue={props.password}
                   secureTextEntry={true}
-                  onChangeText={props.onChangeBottomText}
+                  onChangeText={props.onChangePassWordText}
       />
       <Button title={'登录'}
               style={styles.loginButtonStyle}
@@ -86,6 +97,7 @@ const LoginInput = (props) => {
   return(
     <View style={styles.inputViewStyle}>
       <Input placeholder={props.placeholder}
+             defaultValue={props.defaultValue}
              style={styles.inputStyle}
              secureTextEntry={props.secureTextEntry}
              onChangeText={props.onChangeText}
