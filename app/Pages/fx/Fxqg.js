@@ -1,6 +1,3 @@
-/**
- * Created by Rabbit on 2017/11/2.
- */
 
 import React, {Component} from 'react';
 import {
@@ -10,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {FX} from '../nativeModules';
+import {FX} from '../../nativeModules/index';
 
 import { SegmentedView, Button, NavigationBar, Overlay, Input , } from 'teaset';
 
@@ -46,17 +43,21 @@ export default class Fxqg extends Component {
   }
 
    login=()=>{
+    isLockBack=true;
     ShowLoading();
     let userName = this.state.userName;
     let password = this.state.password;
     FX.login(userName, password).then((map)=> {
         HideLoading();
+        isLockBack=false;
         if(map['code'] == 'success'){
+          Toast.success("登陆成功！")
           AsyncStorage.setItem("FX_USER_NAME",userName);
           AsyncStorage.setItem("FX_USER_PASSWORD",password);
-
+          fxCookies = map['result'];
+          Actions.FxList();
         }else{
-          Toast.fail(map['result']);
+          Toast.fail(JSON.parse(map['result']).error);
         }
       }
     );

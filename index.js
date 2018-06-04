@@ -2,6 +2,7 @@
 import { AppRegistry } from 'react-native';
 import './app/Common/SetTheme'
 import './app/Common/Global'
+import './app/Common/Params'
 
 
 import App from './App';

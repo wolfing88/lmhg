@@ -39,7 +39,7 @@ public class FXModule extends ReactContextBaseJavaModule implements Application.
             public void run() {
                 WritableMap map = HttpUtil.getCookies(IP.FX_LOGIN,
                         "uname="+ userName +"&password="+ password ,"X-Requested-With:XMLHttpRequest##User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"
-                        ,"","POST","UTF-8",8000);
+                        ,"","POST","UTF-8",IP.TIME_OUT);
                 promise.resolve(map);
             }}.start();
     }

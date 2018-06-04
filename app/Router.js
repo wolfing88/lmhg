@@ -22,7 +22,8 @@ import {
 import { Theme } from 'teaset';
 
 import Home from './Pages/Home';
-import Fxqg from './Pages/Fxqg'
+import Fxqg from './Pages/fx/Fxqg'
+import FxList from './Pages/fx/FxList'
 
 
 const reducerCreate = params => {
@@ -38,6 +39,9 @@ const getSceneStyle = () => ({
 });
 
 const onBackPress = () => {
+  if(isLockBack){
+    return true;
+  }
   if (Actions.state.index == 0) {
     return false
   }
@@ -55,6 +59,7 @@ const router = (...props) => (
     >
       <Scene hideNavBar key={'Home'} component={Home} />
       <Scene key={'Fxqg'} component={Fxqg} title={'test'} />
+      <Scene key={'FxList'} component={FxList} title={'test'} />
     </Modal>
   </Router>
 );

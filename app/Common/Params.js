@@ -1,0 +1,4 @@
+//FxCookies
+global.fxCookies = '';
+
+

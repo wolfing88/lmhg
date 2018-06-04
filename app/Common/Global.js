@@ -11,7 +11,7 @@ import { Actions } from "react-native-router-flux";
 // 处理安卓，iOS字体不同的类，使用方法 fontSize:FONT_SIZE(20)
 import FontSize from './FontSize';
 // 处理安卓，iOS宽高的区别，使用方法 width:px2dp(20)
-import { px2dp,isNotEmpty } from './Tool';
+import { px2dp,isNotEmpty,encodeUnicode,decodeUnicodes } from './Tool';
 
 // teaset中提供的一些常用方法
 import { Theme, Toast } from 'teaset';
@@ -60,5 +60,9 @@ global.Toast = Toast;
 global.isNotEmpty = isNotEmpty;
 //是否锁定返回键
 global.isLockBack = false;
+//Unicode编码
+global.encodeUnicode = encodeUnicode;
+//Unicodes解码
+global.decodeUnicodes = decodeUnicodes;
 
 

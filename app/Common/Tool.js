@@ -32,3 +32,18 @@ exports.isNotEmpty = function isNotEmpty(obj){
   }
   return false;
 };
+
+// 转为unicode 编码
+exports.encodeUnicode = function encodeUnicode(str) {
+  var res = [];
+  for ( var i=0; i<str.length; i++ ) {
+    res[i] = ( "00" + str.charCodeAt(i).toString(16) ).slice(-4);
+  }
+  return "\\u" + res.join("\\u");
+}
+
+// Unicode解码
+exports.decodeUnicodes = function decodeUnicode(str) {
+  str = str.replace(/\\/g, "%");
+  return unescape(str);
+}
