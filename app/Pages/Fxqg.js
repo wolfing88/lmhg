@@ -25,6 +25,12 @@ export default class Fxqg extends Component {
     this.getUserInfo();
   }
 
+  componentDidMount() {
+    // InteractionManager.runAfterInteractions(() => {
+    //   this.loginFinishsubScription = DeviceEventEmitter.addListener("loginFinish", this.loginFinish.bind(this));
+    // });
+  }
+
 
   async getUserInfo(){
     let userName = await AsyncStorage.getItem('FX_USER_NAME');
@@ -41,12 +47,11 @@ export default class Fxqg extends Component {
 
    login=()=>{
     ShowLoading();
-    // FX.login('luo', '131').then((map)=> {
-      //HideLoading();
-      // alert(map['result']);}
-    // );
+    FX.login('luo', '131').then((map)=> {
+      // HideLoading();
+      alert(map['result']);}
+    );
   }
-
 
 
   render() {
