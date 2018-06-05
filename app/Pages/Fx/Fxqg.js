@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {FX} from '../../nativeModules/index';
+import {FX} from '../../NativeModules/index';
 
 import { SegmentedView, Button, NavigationBar, Overlay, Input , } from 'teaset';
 

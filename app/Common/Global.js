@@ -64,5 +64,7 @@ global.isLockBack = false;
 global.encodeUnicode = encodeUnicode;
 //Unicodes解码
 global.decodeUnicodes = decodeUnicodes;
+//拼接网页参数
+global.JsonToString = JsonToString;
 
 

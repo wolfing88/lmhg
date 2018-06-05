@@ -22,8 +22,8 @@ import {
 import { Theme } from 'teaset';
 
 import Home from './Pages/Home';
-import Fxqg from './Pages/fx/Fxqg'
-import FxList from './Pages/fx/FxList'
+import Fxqg from './Pages/Fx/Fxqg'
+import FxList from './Pages/Fx/FxList'
 
 
 const reducerCreate = params => {

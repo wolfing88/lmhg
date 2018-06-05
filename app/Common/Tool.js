@@ -47,3 +47,23 @@ exports.decodeUnicodes = function decodeUnicode(str) {
   str = str.replace(/\\/g, "%");
   return unescape(str);
 }
+
+//拼接网页参数
+exports.JsonToString = function  JsonToString(args){
+  if(args == undefined ||args.length == 0||args.size == 0){
+    return '';
+  }
+  var keys = Object.keys(args);
+  // keys = keys.sort()
+  var newArgs = {};
+  keys.forEach(function (key) {
+    newArgs[key] = args[key];
+  });
+
+  var string = '';
+  for (var k in newArgs) {
+    string += '&' + k + '=' + newArgs[k];
+  }
+  string = string.substr(1);
+  return string;
+};

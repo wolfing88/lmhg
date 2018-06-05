@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import {getProductListAction} from  '../../Actions/CommonAction'
 
 export default class FxList extends Component {
   constructor(props) {
@@ -8,6 +9,12 @@ export default class FxList extends Component {
     this.state = {
        productList:[],
     };
+  }
+
+  componentDidMount () {
+    getProductListAction({mallType:'FX'},(data)=>{
+      console.log(data)
+    })
   }
 
 render(){
