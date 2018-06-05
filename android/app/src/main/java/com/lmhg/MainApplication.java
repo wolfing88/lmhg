@@ -9,6 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.lmhg.rn.LMReactPackage;
+import com.tencent.bugly.Bugly;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,5 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Bugly.init(getApplicationContext(), "03d5cac74c", false);
   }
 }
