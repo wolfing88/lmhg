@@ -57,9 +57,10 @@ const router = (...props) => (
     <Modal
       transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}
     >
+      <Scene key={'FxList'} component={FxList} title={'test'} />
       <Scene hideNavBar key={'Home'} component={Home} />
       <Scene key={'Fxqg'} component={Fxqg} title={'test'} />
-      <Scene key={'FxList'} component={FxList} title={'test'} />
+      {/*<Scene key={'FxList'} component={FxList} title={'test'} />*/}
     </Modal>
   </Router>
 );

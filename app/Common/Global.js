@@ -1,25 +1,20 @@
-
 import React, { Component } from 'react';
 import { Dimensions, AsyncStorage, PixelRatio, Platform, Alert } from 'react-native';
-
 // 项目中的图片可以通过Images.xxx 获取
 import { Images } from '../Resources/index';
-
 // 统一管理项目中的路由
 import { Actions } from "react-native-router-flux";
-
 // 处理安卓，iOS字体不同的类，使用方法 fontSize:FONT_SIZE(20)
 import FontSize from './FontSize';
 // 处理安卓，iOS宽高的区别，使用方法 width:px2dp(20)
-import { px2dp,isNotEmpty,encodeUnicode,decodeUnicodes,JsonToString } from './Tool';
-
+import { px2dp,isNotEmpty,encodeUnicode,decodeUnicodes,RC4decrypt,RC4encrypt } from './Tool';
 // teaset中提供的一些常用方法
 import { Theme, Toast } from 'teaset';
-
 // 基于react-native-fetch-blob封装的网络请求
 import RTRequest from './Request';
 // 配置文件，可以放网络请求等
 import Config from './Config';
+
 
 // 通过系统API获得屏幕宽高
 let { height, width } = Dimensions.get('window');
@@ -62,7 +57,11 @@ global.isNotEmpty = isNotEmpty;
 global.isLockBack = false;
 //Unicode编码
 global.encodeUnicode = encodeUnicode;
-//Unicodes解码
+//Unicode解码
 global.decodeUnicodes = decodeUnicodes;
+//RC4加密
+global.RC4encrypt = RC4encrypt;
+//RC4解密
+global.RC4decrypt = RC4decrypt;
 
 

@@ -63,7 +63,7 @@ class Botton extends Component{
 
   //跳转
   toJump=(data)=>{
-     Actions.Fxqg();
+    Actions.Fxqg();
   }
 
 

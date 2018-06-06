@@ -47,7 +47,7 @@ export default class Fxqg extends Component {
     ShowLoading();
     let userName = this.state.userName;
     let password = this.state.password;
-    FX.login(userName, password).then((map)=> {
+    FX.login("13392619771", "a871124").then((map)=> {
         HideLoading();
         isLockBack=false;
         if(map['code'] == 'success'){

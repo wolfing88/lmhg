@@ -3,6 +3,8 @@ import {
   Platform
 } from 'react-native';
 
+import {LM} from '../NativeModules/index';
+
 export default {
   async isLogin(){
     let data = await AsyncStorage.getItem('TOKEN');
@@ -47,3 +49,14 @@ exports.decodeUnicodes = function decodeUnicode(str) {
   str = str.replace(/\\/g, "%");
   return unescape(str);
 }
+
+// RC4加密
+exports.RC4encrypt = async  function RC4encrypt(str) {
+  return await LM.RC4encrypt(str,RC4Key)['result'];
+}
+
+// RC4解密
+exports.RC4decrypt = async function RC4decrypt(str) {
+  return await LM.RC4decrypt(str,RC4Key)['result'];
+}
+

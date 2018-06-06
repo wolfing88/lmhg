@@ -33,9 +33,18 @@ const throwError = (json) => {
 };
 
 
-const checkStatus = (resp, json) => {
-    // console.log(resp, json);
-    if (resp.respInfo.status === 200 && json.status === 0){
+const checkStatus = (resp,isDecrypt) => {
+    let content = undefined;
+    if(isDecrypt){
+      console.log(resp.data)
+      content = RC4decrypt(resp.data);
+    }else{
+      content = resp.json()
+    }
+
+    console.log('aaa',content)
+
+    if (resp.respInfo.status === 200 && content.status === 0){
         return json;
     }else{
         throwError(json);
@@ -79,7 +88,7 @@ const Request = {
      * @returns {Promise.<TResult>}
      *
      */
-    fetch: async( { method, url, params = {}, config = {}, header = {} } ) => {
+    fetch: async( { method, url, params = {}, config = {}, header = {} ,isDecrypt} ) => {
         let _method;
         let _params;
         let _url = url;
@@ -110,12 +119,13 @@ const Request = {
             .config(_config)
             .fetch(_method ,_url, _header, _params)
             .then(resp => {
-                return checkStatus(resp, resp.json());
+                return checkStatus(resp,isDecrypt);
             })
             .then((response)=>{
                 return response;
             })
             .catch((error)=>{
+                console.log('ttttttttt')
                 throw error
             })
     },
@@ -129,9 +139,8 @@ const Request = {
      * @returns
      *
      */
-    get:( url, params = {}, header = {}, config = {} ) => {
-
-        return RTRequest.fetch({method:'get', url, params, header, config })
+    get:( url , isDecrypt , params = {}, header = {}, config = {} ) => {
+        return RTRequest.fetch({method:'get', url, params, header, config ,isDecrypt})
             .then((data)=>{
                 // console.log(data);
                 return data;
@@ -142,9 +151,8 @@ const Request = {
             })
     },
 
-    post:( url, params = {}, header = {}, config = {} ) => {
-
-        return RTRequest.fetch({method:'post', url, params, header, config })
+    post:( url ,isDecrypt , params = {}, header = {}, config = {} ) => {
+        return RTRequest.fetch({method:'post', url, params, header, config ,isDecrypt})
             .then((data)=>{
                 // console.log(data);
                 return data;

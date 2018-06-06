@@ -24,6 +24,7 @@ public class LMReactPackage implements ReactPackage {
             ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new FXModule(reactContext));
+        modules.add(new LMModule(reactContext));
         return modules;
     }
 }
