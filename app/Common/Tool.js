@@ -3,7 +3,7 @@ import {
   Platform
 } from 'react-native';
 
-import {LM} from '../NativeModules/index';
+let  CryptoJS = require("crypto-js");
 
 export default {
   async isLogin(){
@@ -51,12 +51,17 @@ exports.decodeUnicodes = function decodeUnicode(str) {
 }
 
 // RC4加密
-exports.RC4encrypt = async  function RC4encrypt(str) {
-  return await LM.RC4encrypt(str,RC4Key)['result'];
+exports.RC4encrypt =  function RC4encrypt(str) {
+  let key = CryptoJS.enc.Utf8.parse(RC4Key);
+  let srcs = CryptoJS.enc.Utf8.parse(str);
+  return  CryptoJS.RC4.encrypt(srcs, key).toString(CryptoJS.format.Hex);
 }
 
 // RC4解密
-exports.RC4decrypt = async function RC4decrypt(str) {
-  return await LM.RC4decrypt(str,RC4Key)['result'];
+exports.RC4decrypt = function RC4decrypt(str) {
+  let key = CryptoJS.enc.Utf8.parse(RC4Key);
+  let srcs = CryptoJS.enc.Hex.parse(str);
+  let decryptdata = CryptoJS.RC4.decrypt(CryptoJS.lib.CipherParams.create({ ciphertext:srcs}),key);
+  return decryptdata.toString(CryptoJS.enc.Utf8);
 }
 
