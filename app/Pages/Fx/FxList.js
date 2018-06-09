@@ -16,6 +16,8 @@ export default class FxList extends Component {
     super(props);
     this.state = {
       productList:[],
+      addressList:[],
+      couponsList:[],
       selectList:{
         product:'请选择商品',
         address:undefined,
@@ -39,7 +41,8 @@ export default class FxList extends Component {
       case 'productList':
         this.refs.productList.show();
         break;
-      case '':
+      case 'address':
+        this.refs.address.show();
         break;
     }
   }
@@ -67,6 +70,11 @@ export default class FxList extends Component {
         <ConsoleView/>
         <ShowView ref = 'productList'>
           <ProductList productList={this.state.productList}
+                       selectData={this.selectData}
+          />
+        </ShowView>
+        <ShowView ref = 'addressList'>
+          <AddressList addressList={this.state.addressList}
                        selectData={this.selectData}
           />
         </ShowView>
@@ -166,8 +174,8 @@ class ProductList extends PureComponent {
                             onPress={()=>this.props.selectData(data,'productList')}
           >
             <View style={{height:SCREEN_HEIGHT * 0.145,alignItems:'center',flexDirection:'row'}}>
-              <Image style={{height:SCREEN_HEIGHT * 0.14,width:SCREEN_HEIGHT * 0.14,borderRadius:8}}
-                     source = {{uri:data.productImg}}/>
+              <ImageView style={{height:SCREEN_HEIGHT * 0.14,width:SCREEN_HEIGHT * 0.14,borderRadius:8}}
+                         imgUrl = {data.productImg}/>
               <View style={{paddingLeft:px2dp(35),flexDirection:'column',}}>
                 <Text style={[styles.ProductListText,{color:'#252525'}]}>{data.productName}</Text>
                 <Text style={[styles.ProductListText,{color:'#E5472C'}]}>{'返红包：' + data.commission + "元"}</Text>
