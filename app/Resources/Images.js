@@ -7,7 +7,8 @@ const Images =  {
     ShiTu:require('./images/ShiTu.png'),
     Gank: require('./images/Gank.png'),
     Main: require('./images/Main.png'),
-    Loading: require('./images/load.gif')
+    Loading: require('./images/load.gif'),
+    Right: require('./images/right.png'),
 };
 
 export default Images;

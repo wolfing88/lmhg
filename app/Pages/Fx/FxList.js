@@ -1,13 +1,28 @@
-
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import React, { Component,PureComponent } from 'react'
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from 'react-native'
+import ShowView from '../../Component/ShowView';
+import ImageView from '../../Component/ImageView';
 import {getProductListAction} from  '../../Actions/CommonAction'
 
 export default class FxList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       productList:[],
+      productList:[],
+      selectList:{
+        product:'请选择商品',
+        address:undefined,
+        coupons:undefined,
+      }
+
+
     };
   }
 
@@ -19,13 +34,164 @@ export default class FxList extends Component {
 
   }
 
-render(){
+  openOrCloseWin=(openType,type)=>{
+    this.refs.productList.show();
+  }
+
+  render(){
     return(
-      <View><Text>6666</Text></View>
+      <View style={{flex:1}}>
+        <Header/>
+        <SelectView
+          selectList={this.state.selectList}
+          openOrCloseWin={(openType,type)=>this.openOrCloseWin(openType,type)}
+        />
+        <ConsoleView/>
+        <ShowView ref = 'productList'>
+          <ProductList productList={this.state.productList}/>
+        </ShowView>
+      </View>
     )
+  }
+}
+
+
+class Header extends  PureComponent{
+  render(){
+    return(
+      <View style={{width:SCREEN_WIDTH,height:SCREEN_HEIGHT * 0.08,backgroundColor:'#ff0',justifyContent:'center',alignItems:'center'}}>
+        <Text>{'欢迎您：'}</Text>
+      </View>
+    )
+  }
+}
+
+class SelectView extends  PureComponent{
+  constructor(props){
+    super(props);
+    console.log(props.selectList);
+    this.array = [
+      {title:'商品：',text: props.selectList.product,openType:'productList'},
+      {title:'收货地址：',text: props.selectList.address,openType:'address'},
+      {title:'优惠券：',text: props.selectList.coupons,openType:'coupons'},
+    ]
+  }
+  render(){
+    let textList = this.array.map((data,index)=>{
+      return(
+        <TextView key = {index}
+                  openOrCloseWin={(openType,type)=>this.props.openOrCloseWin(openType,type)}
+                  openType = {data.openType}
+                  title = {data.title}
+                  text = {data.text}/>
+      )
+    });
+    return(
+      <View style={{width:SCREEN_WIDTH,height:SCREEN_HEIGHT * 0.45,alignItems:'center'}}>
+        {textList}
+      </View>
+    )
+  }
+}
+
+class ConsoleView extends  PureComponent{
+  render(){
+    return(
+      <View style={{width:SCREEN_WIDTH,height:SCREEN_HEIGHT * 0.08,backgroundColor:'#ff0',justifyContent:'center',alignItems:'center'}}>
+        <Text>{'欢迎您：'}</Text>
+      </View>
+    )
+  }
+}
+
+
+class TextView extends PureComponent {
+  render(){
+    return(
+      <TouchableOpacity style={styles.WriteInli} onPress = {()=>this.props.openOrCloseWin(this.props.openType,'open')} >
+        <View style={styles.WriteInliTit}><Text style={styles.WriteInliTitstyle}>{this.props.title}</Text></View>
+        <View style={styles.WriteInliText}>
+          <Text style={styles.WriteInliTextstyle}>{this.props.text}</Text>
+        </View>
+        <Image source={Images.Right} />
+      </TouchableOpacity>
+    )
+  }
 }
 
 
 
+class ProductList extends PureComponent {
+  constructor (props){
+    super(props);
+    this.state={
+      array:[
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+        {productId:'35',productName:'R1(黑)AI音箱',productImg:'https://imgmall.phicomm.com/cb/8f/8db97506ad2c.jpg!xs?23021_OW750_OH750',commission:'35'},
+      ]
+    }
+  }
+
+  render(){
+    let content = this.state.array.map((data,index)=>{
+      return(
+        <View key = {index}>
+          <TouchableOpacity style={{height:SCREEN_HEIGHT * 0.15,borderTopWidth: 1, borderColor: '#e5e5e5',justifyContent:'center'}}>
+            <View style={{height:SCREEN_HEIGHT * 0.145,alignItems:'center',flexDirection:'row'}}>
+              <Image style={{height:SCREEN_HEIGHT * 0.14,width:SCREEN_HEIGHT * 0.14,borderRadius:8}}
+                     source = {{uri:data.productImg}}/>
+              <View style={{paddingLeft:px2dp(35),flexDirection:'column',}}>
+                <Text style={[styles.ProductListText,{color:'#252525'}]}>{data.productName}</Text>
+                <Text style={[styles.ProductListText,{color:'#E5472C'}]}>{'返红包：' + data.commission + "元"}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    })
+
+    return(
+      <View style={styles.ListViewBox}>
+        <View style={styles.ListTitel}>
+          <Text style={styles.ListTitleText}>{'请选择商品'}</Text>
+        </View>
+        <ScrollView style={{borderRadius:8}}>
+          {content}
+        </ScrollView>
+      </View>
+    )
+  }
 }
 
+
+const styles = StyleSheet.create({
+  WriteInli: {
+    borderBottomWidth: 1,
+    borderColor: '#e5e5e5',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+  },
+  WriteInlinfo: { borderBottomWidth: 1, borderColor: '#e5e5e5', paddingBottom: 10, },
+  WriteInliTit: { height: px2dp(80), justifyContent: 'flex-end', alignItems: 'center', width: px2dp(160), flexDirection: 'row', },
+  WriteInliTitstyle: { fontSize: px2dp(30), color: '#333', },
+  WriteInliText: { flex: 3, },
+  WriteInliTextstyle: { fontSize: px2dp(30), color: '#666', paddingHorizontal: 10, },
+  ListViewBox:{
+    width:SCREEN_WIDTH * 0.75,maxHeight:SCREEN_HEIGHT * 0.9, backgroundColor:'#fff',borderRadius:8
+  },
+  ProductListText:{
+    padding:px2dp(10)
+  },
+  ListTitel:{
+    height:SCREEN_HEIGHT * 0.06,backgroundColor:'#333',alignItems:'center',justifyContent:'center', borderTopLeftRadius: 8, borderTopRightRadius: 8,
+  },
+  ListTitleText:{
+    color:'#FFF'
+  },
+})
