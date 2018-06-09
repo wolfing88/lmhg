@@ -34,8 +34,26 @@ export default class FxList extends Component {
 
   }
 
-  openOrCloseWin=(openType,type)=>{
-    this.refs.productList.show();
+  openWin=(openType)=>{
+    switch (openType){
+      case 'productList':
+        this.refs.productList.show();
+        break;
+      case '':
+        break;
+    }
+  }
+
+  selectData=(data,openType)=>{
+    switch (openType){
+      case 'productList':
+        this.state.selectList.product = data.productName
+        this.refs.productList.hide();
+        break;
+      case '':
+        break;
+    }
+    this.setState({});
   }
 
   render(){
@@ -44,11 +62,13 @@ export default class FxList extends Component {
         <Header/>
         <SelectView
           selectList={this.state.selectList}
-          openOrCloseWin={(openType,type)=>this.openOrCloseWin(openType,type)}
+          openWin={(openType)=>this.openWin(openType)}
         />
         <ConsoleView/>
         <ShowView ref = 'productList'>
-          <ProductList productList={this.state.productList}/>
+          <ProductList productList={this.state.productList}
+                       selectData={this.selectData}
+          />
         </ShowView>
       </View>
     )
@@ -69,18 +89,19 @@ class Header extends  PureComponent{
 class SelectView extends  PureComponent{
   constructor(props){
     super(props);
-    console.log(props.selectList);
-    this.array = [
-      {title:'商品：',text: props.selectList.product,openType:'productList'},
-      {title:'收货地址：',text: props.selectList.address,openType:'address'},
-      {title:'优惠券：',text: props.selectList.coupons,openType:'coupons'},
-    ]
+
   }
+
   render(){
+    this.array = [
+      {title:'商品：',text: this.props.selectList.product,openType:'productList'},
+      {title:'收货地址：',text: this.props.selectList.address,openType:'address'},
+      {title:'优惠券：',text: this.props.selectList.coupons,openType:'coupons'},
+    ]
     let textList = this.array.map((data,index)=>{
       return(
         <TextView key = {index}
-                  openOrCloseWin={(openType,type)=>this.props.openOrCloseWin(openType,type)}
+                  openWin={(openType)=>this.props.openWin(openType)}
                   openType = {data.openType}
                   title = {data.title}
                   text = {data.text}/>
@@ -108,7 +129,7 @@ class ConsoleView extends  PureComponent{
 class TextView extends PureComponent {
   render(){
     return(
-      <TouchableOpacity style={styles.WriteInli} onPress = {()=>this.props.openOrCloseWin(this.props.openType,'open')} >
+      <TouchableOpacity style={styles.WriteInli} onPress = {()=>this.props.openWin(this.props.openType,'open')} >
         <View style={styles.WriteInliTit}><Text style={styles.WriteInliTitstyle}>{this.props.title}</Text></View>
         <View style={styles.WriteInliText}>
           <Text style={styles.WriteInliTextstyle}>{this.props.text}</Text>
@@ -141,7 +162,9 @@ class ProductList extends PureComponent {
     let content = this.state.array.map((data,index)=>{
       return(
         <View key = {index}>
-          <TouchableOpacity style={{height:SCREEN_HEIGHT * 0.15,borderTopWidth: 1, borderColor: '#e5e5e5',justifyContent:'center'}}>
+          <TouchableOpacity style={{height:SCREEN_HEIGHT * 0.15,borderTopWidth: 1, borderColor: '#e5e5e5',justifyContent:'center'}}
+                            onPress={()=>this.props.selectData(data,'productList')}
+          >
             <View style={{height:SCREEN_HEIGHT * 0.145,alignItems:'center',flexDirection:'row'}}>
               <Image style={{height:SCREEN_HEIGHT * 0.14,width:SCREEN_HEIGHT * 0.14,borderRadius:8}}
                      source = {{uri:data.productImg}}/>
