@@ -6,6 +6,8 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  TextInput,
+  Keyboard,
 } from 'react-native'
 import ShowView from '../../Component/ShowView';
 import ImageView from '../../Component/ImageView';
@@ -76,6 +78,7 @@ export default class FxList extends Component {
           selectList={this.state.selectList}
           openWin={(openType)=>this.openWin(openType)}
         />
+        <OperationView/>
         <ConsoleView/>
         <ShowView ref = 'productList'>
           <ProductList productList={this.state.productList}
@@ -96,7 +99,6 @@ export default class FxList extends Component {
     )
   }
 }
-
 
 class Header extends  PureComponent{
   render(){
@@ -136,12 +138,86 @@ class SelectView extends  PureComponent{
       )
     });
     return(
-      <View style={{width:SCREEN_WIDTH,height:SCREEN_HEIGHT * 0.45,alignItems:'center'}}>
+      <View style={{width:SCREEN_WIDTH,height:SCREEN_HEIGHT * 0.33,alignItems:'center'}}>
         {textList}
       </View>
     )
   }
 }
+
+class OperationView extends PureComponent{
+
+  constructor (props){
+    super(props);
+    this.state={
+      num:"1"
+    }
+  }
+
+  componentWillMount () {
+    //监听键盘状态
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.hideKeyboard.bind(this));
+  }
+  //隐藏键盘的时候，输入框失去焦点
+  hideKeyboard = ()=> {
+    this.textInput.blur();
+  };
+  componentWillUnmount () {
+    //移除监听
+    this.keyboardDidHideListener && this.keyboardDidHideListener.remove();
+  }
+
+
+  setNum = (text)=> {
+    text = text.replace(/[^\d.]/g, "");
+    //必须保证第一位为数字而不是.
+    text = text.replace(/^\./g, "");
+    //保证只有出现一个.而没有多个.
+    text = text.replace(/\.{2,}/g, ".");
+    //保证.只出现一次，而不能出现两次以上
+    text = text.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+    //修复因为空字符串导致出现NaN
+    text = text && text != '' ? text : '';
+    this.setState({
+      num:text
+    })
+
+  };
+
+  render(){
+    return(
+      <View>
+        <View style={[styles.WriteInli]}>
+          <View style={styles.WriteInliTit}><Text style={styles.WriteInliTitstyle}>{'抢购数量：'}</Text></View>
+          <View style={[styles.WriteInliText]}>
+            <TextInput
+              ref = {ref => this.textInput = ref}
+              style={{backgroundColor: '#f7f7f7',borderWidth: 1, borderColor: '#e5e5e5', padding: 2, borderRadius: 3}}
+              underlineColorAndroid = {"transparent"}
+              maxLength={3}
+              keyboardType={'numeric'}
+              onChangeText={(text)=> this.setNum(text)}
+              value={this.state.num}/>
+          </View>
+        </View>
+        <View style={[styles.WriteInli3]}>
+          <View style={styles.WriteInliTit}><Text style={styles.WriteInliTitstyle}>{'抢购数量：'}</Text></View>
+          <View style={[styles.WriteInliText]}>
+            <TextInput
+              ref = {ref => this.textInput = ref}
+              style={{backgroundColor: '#f7f7f7',borderWidth: 1, borderColor: '#e5e5e5', padding: 2, borderRadius: 3}}
+              underlineColorAndroid = {"transparent"}
+              maxLength={3}
+              keyboardType={'numeric'}
+              onChangeText={(text)=> this.setNum(text)}
+              value={this.state.num}/>
+          </View>
+        </View>
+      </View>
+    )
+  }
+}
+
 
 class ConsoleView extends  PureComponent{
   render(){
@@ -152,7 +228,6 @@ class ConsoleView extends  PureComponent{
     )
   }
 }
-
 
 class TextView extends PureComponent {
   render(){
@@ -167,7 +242,6 @@ class TextView extends PureComponent {
     )
   }
 }
-
 
 
 class ProductList extends PureComponent {
@@ -379,6 +453,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 10,
     height :px2dp(160),
+    width:SCREEN_WIDTH,
+  },
+  WriteInli3: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    height :px2dp(100),
     width:SCREEN_WIDTH,
   },
   WriteInlinfo: { borderBottomWidth: 1, borderColor: '#e5e5e5', paddingBottom: 10, },
