@@ -20,8 +20,8 @@ export default class FxList extends Component {
       couponsList:[],
       selectList:{
         product:'请选择商品',
-        address:undefined,
-        coupons:undefined,
+        address:'请选择地址',
+        coupons:'请选择优惠券',
       }
 
 
@@ -41,8 +41,8 @@ export default class FxList extends Component {
       case 'productList':
         this.refs.productList.show();
         break;
-      case 'address':
-        this.refs.address.show();
+      case 'addressList':
+        this.refs.addressList.show();
         break;
       case 'couponsList':
         this.refs.couponsList.show();
@@ -56,8 +56,11 @@ export default class FxList extends Component {
         this.state.selectList.product = data.productName
         this.refs.productList.hide();
         break;
+      case 'addressList':
+        this.state.selectList.address = data.address
+        this.refs.addressList.hide();
+        break;
       case 'couponsList':
-        alert(JSON.stringify(data))
         this.state.selectList.coupons = data.couponName
         this.refs.couponsList.hide();
         break;
@@ -76,6 +79,11 @@ export default class FxList extends Component {
         <ConsoleView/>
         <ShowView ref = 'productList'>
           <ProductList productList={this.state.productList}
+                       selectData={this.selectData}
+          />
+        </ShowView>
+        <ShowView ref = 'addressList'>
+          <AddressList addressList={this.state.addressList}
                        selectData={this.selectData}
           />
         </ShowView>
@@ -111,7 +119,7 @@ class SelectView extends  PureComponent{
       {title:'商品：',text: this.props.selectList.product,openType:'productList'},
       {title:'收货地址：',text: this.props.selectList.address,openType:'addressList'},
       {title:'优惠券：',text: this.props.selectList.coupons,openType:'couponsList'},
-      {title:'支付方式：',text: this.props.selectList.coupons,openType:'couponsList'},
+      {title:'支付方式：'},
     ]
     let textList = this.array.map((data,index)=>{
       return(
@@ -211,6 +219,53 @@ class ProductList extends PureComponent {
   }
 }
 
+class AddressList extends PureComponent {
+  constructor (props){
+    super(props);
+    this.state={
+      array:[
+        {addr_id:'35',name:'陈先生',phone:'1346548578',address:'广州市白云区广州市白云区广州市白云区广州市白云区广州市白云区'},
+        {addr_id:'35',name:'陈先生',phone:'1346548578',address:'广州市白云区'},
+        {addr_id:'35',name:'陈先生',phone:'1346548578',address:'广州市白云区'},
+        {addr_id:'35',name:'陈先生',phone:'1346548578',address:'广州市白云区'},
+      ]
+    }
+  }
+
+  render(){
+    let content = this.state.array.map((data,index)=>{
+      return(
+        <View key = {index}>
+          <TouchableOpacity style={{borderTopWidth: 1, borderColor: '#e5e5e5',justifyContent:'center'}}
+                            onPress={()=>this.props.selectData(data,'addressList')}
+          >
+            <View style={{flexDirection:'column',}}>
+              <View style={{flexDirection:'row'}}>
+                <Text style={[styles.AddressListText,{color:'#252525',fontSize:px2dp(40)}]}>{data.name}</Text>
+                <Text style={[styles.AddressListText,{color:'#252525',fontSize:px2dp(40)}]}>{data.phone}</Text>
+              </View>
+              <Text style={[styles.AddressListText,]}>
+                {data.address}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    })
+
+    return(
+      <View style={styles.ListViewBox}>
+        <View style={styles.ListTitel}>
+          <Text style={styles.ListTitleText}>{'请选择收货地址'}</Text>
+        </View>
+        <ScrollView style={{borderRadius:8}}>
+          {content}
+        </ScrollView>
+      </View>
+    )
+  }
+}
+
 class CouponsList extends PureComponent {
   constructor (props){
     super(props);
@@ -287,7 +342,7 @@ class PayTypeView extends PureComponent{
   render(){
     let content = this.state.payList.map((data,index)=>{
       return(
-        <View key={index} style={{width:(SCREEN_WIDTH-px2dp(200)) / 2,padding:px2dp(15)}}>
+        <View key={index} style={{width:(SCREEN_WIDTH-px2dp(200)) / 2,padding:px2dp(10)}}>
           <TouchableOpacity style={this.state.payId == data.payId ? styles.WriteInliTouchSelect : styles.WriteInliTouch} onPress={()=>this.selectPay(data)}>
             <Text style={this.state.payId == data.payId ? styles.WriteInliTextstyleSelect : styles.WriteInliTextstyle2 }>{data.payName}</Text>
           </TouchableOpacity>
@@ -332,14 +387,18 @@ const styles = StyleSheet.create({
   WriteInliText: { flex: 3, },
   WriteInliTextstyle: { fontSize: px2dp(30), color: '#666', paddingRight: 5, },
   WriteInliTextstyle2: { fontSize: px2dp(25), color: '#666', padding: px2dp(10), },
-  WriteInliTextstyleSelect: { fontSize: px2dp(33), color: '#666', padding: px2dp(10), },
+  WriteInliTextstyleSelect: { fontSize: px2dp(33), color: '#000', padding: px2dp(10), },
   WriteInliTouch: { alignItems:'center',justifyContent:'center' },
-  WriteInliTouchSelect: { borderWidth:1,borderColor:'#000',borderRadius:px2dp(20),alignItems:'center',justifyContent:'center' },
+  WriteInliTouchSelect: { borderWidth:2,borderColor:'#000',borderRadius:px2dp(50),alignItems:'center',justifyContent:'center' },
   ListViewBox:{
     width:SCREEN_WIDTH * 0.75,maxHeight:SCREEN_HEIGHT * 0.9, backgroundColor:'#fff',borderRadius:8
   },
   ProductListText:{
     padding:px2dp(10)
+  },
+  AddressListText:{
+    padding:px2dp(10),
+    margin:px2dp(5),
   },
   ListTitel:{
     height:SCREEN_HEIGHT * 0.06,backgroundColor:'#333',alignItems:'center',justifyContent:'center', borderTopLeftRadius: 8, borderTopRightRadius: 8,
