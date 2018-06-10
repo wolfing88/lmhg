@@ -44,6 +44,9 @@ export default class FxList extends Component {
       case 'address':
         this.refs.address.show();
         break;
+      case 'couponsList':
+        this.refs.couponsList.show();
+        break;
     }
   }
 
@@ -53,7 +56,10 @@ export default class FxList extends Component {
         this.state.selectList.product = data.productName
         this.refs.productList.hide();
         break;
-      case '':
+      case 'couponsList':
+        alert(JSON.stringify(data))
+        this.state.selectList.coupons = data.couponName
+        this.refs.couponsList.hide();
         break;
     }
     this.setState({});
@@ -73,8 +79,8 @@ export default class FxList extends Component {
                        selectData={this.selectData}
           />
         </ShowView>
-        <ShowView ref = 'addressList'>
-          <AddressList addressList={this.state.addressList}
+        <ShowView ref = 'couponsList'>
+          <CouponsList couponsList={this.state.couponsList}
                        selectData={this.selectData}
           />
         </ShowView>
@@ -103,16 +109,22 @@ class SelectView extends  PureComponent{
   render(){
     this.array = [
       {title:'商品：',text: this.props.selectList.product,openType:'productList'},
-      {title:'收货地址：',text: this.props.selectList.address,openType:'address'},
-      {title:'优惠券：',text: this.props.selectList.coupons,openType:'coupons'},
+      {title:'收货地址：',text: this.props.selectList.address,openType:'addressList'},
+      {title:'优惠券：',text: this.props.selectList.coupons,openType:'couponsList'},
+      {title:'支付方式：',text: this.props.selectList.coupons,openType:'couponsList'},
     ]
     let textList = this.array.map((data,index)=>{
       return(
-        <TextView key = {index}
-                  openWin={(openType)=>this.props.openWin(openType)}
-                  openType = {data.openType}
-                  title = {data.title}
-                  text = {data.text}/>
+        index != 3 ? (
+          <TextView key = {index}
+                    openWin={(openType)=>this.props.openWin(openType)}
+                    openType = {data.openType}
+                    title = {data.title}
+                    text = {data.text}/>
+        ) : (
+          <PayTypeView key = {index} />
+        )
+
       )
     });
     return(
@@ -199,6 +211,101 @@ class ProductList extends PureComponent {
   }
 }
 
+class CouponsList extends PureComponent {
+  constructor (props){
+    super(props);
+    this.state={
+      array:[
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+        {coupon:'35',couponName:'满399-50元',rules:'六月新品除外',validity:'2018-06-01 -- 2018-06-30'},
+      ]
+    }
+  }
+
+  render(){
+    let content = this.state.array.map((data,index)=>{
+      return(
+        <View key = {index}>
+          <TouchableOpacity style={{height:SCREEN_HEIGHT * 0.15,borderTopWidth: 1, borderColor: '#e5e5e5',justifyContent:'center'}}
+                            onPress={()=>this.props.selectData(data,'couponsList')}
+          >
+            <View style={{paddingLeft:px2dp(35),flexDirection:'column',}}>
+              <Text style={[styles.ProductListText,{color:'#E5472C',fontSize:px2dp(40)}]}>{data.couponName}</Text>
+              <Text style={[styles.ProductListText,{color:'#252525'}]}>{data.rules}</Text>
+              <Text style={[styles.ProductListText,{color:'#252525'}]}>{data.validity}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+    })
+
+    return(
+      <View style={styles.ListViewBox}>
+        <View style={styles.ListTitel}>
+          <Text style={styles.ListTitleText}>{'请选择优惠券'}</Text>
+        </View>
+        <ScrollView style={{borderRadius:8}}>
+          {content}
+        </ScrollView>
+      </View>
+    )
+  }
+}
+
+class PayTypeView extends PureComponent{
+
+  constructor (props){
+    super(props);
+    this.state= {
+      payList : [
+        {payId:1,payName:'京东支付'},
+        {payId:2,payName:'微信支付'},
+        {payId:3,payName:'支付宝支付'},
+        {payId:4,payName:'银联支付'}
+      ],
+      payId:1,
+    }
+  }
+
+  selectPay=(data)=>{
+    this.setState({
+      payId :data.payId
+    })
+  }
+
+
+  render(){
+    let content = this.state.payList.map((data,index)=>{
+      return(
+        <View key={index} style={{width:(SCREEN_WIDTH-px2dp(200)) / 2,padding:px2dp(15)}}>
+          <TouchableOpacity style={this.state.payId == data.payId ? styles.WriteInliTouchSelect : styles.WriteInliTouch} onPress={()=>this.selectPay(data)}>
+            <Text style={this.state.payId == data.payId ? styles.WriteInliTextstyleSelect : styles.WriteInliTextstyle2 }>{data.payName}</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    })
+
+    return(
+      <View style={[styles.WriteInli2]}>
+        <View style={styles.WriteInliTit}><Text style={styles.WriteInliTitstyle}>{'支付方式：'}</Text></View>
+        <View style={[styles.WriteInliText,{flexDirection:'row',flexWrap:'wrap'}]}>
+          {content}
+        </View>
+      </View>
+    )
+  }
+}
+
 
 const styles = StyleSheet.create({
   WriteInli: {
@@ -207,12 +314,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 10,
+    height :px2dp(80),
+    width:SCREEN_WIDTH,
+  },
+  WriteInli2: {
+    borderBottomWidth: 1,
+    borderColor: '#e5e5e5',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    height :px2dp(160),
+    width:SCREEN_WIDTH,
   },
   WriteInlinfo: { borderBottomWidth: 1, borderColor: '#e5e5e5', paddingBottom: 10, },
   WriteInliTit: { height: px2dp(80), justifyContent: 'flex-end', alignItems: 'center', width: px2dp(160), flexDirection: 'row', },
   WriteInliTitstyle: { fontSize: px2dp(30), color: '#333', },
   WriteInliText: { flex: 3, },
-  WriteInliTextstyle: { fontSize: px2dp(30), color: '#666', paddingHorizontal: 10, },
+  WriteInliTextstyle: { fontSize: px2dp(30), color: '#666', paddingRight: 5, },
+  WriteInliTextstyle2: { fontSize: px2dp(25), color: '#666', padding: px2dp(10), },
+  WriteInliTextstyleSelect: { fontSize: px2dp(33), color: '#666', padding: px2dp(10), },
+  WriteInliTouch: { alignItems:'center',justifyContent:'center' },
+  WriteInliTouchSelect: { borderWidth:1,borderColor:'#000',borderRadius:px2dp(20),alignItems:'center',justifyContent:'center' },
   ListViewBox:{
     width:SCREEN_WIDTH * 0.75,maxHeight:SCREEN_HEIGHT * 0.9, backgroundColor:'#fff',borderRadius:8
   },
