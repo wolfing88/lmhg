@@ -9,6 +9,7 @@ const Images =  {
     Main: require('./images/Main.png'),
     Loading: require('./images/load.gif'),
     Right: require('./images/right.png'),
+    NoData: require('./images/NoData.png'),
 };
 
 export default Images;
