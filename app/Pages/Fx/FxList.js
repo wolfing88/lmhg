@@ -75,8 +75,8 @@ export default class FxList extends Component {
 
   render(){
     return(
-      <View style={{flex:1}}>
-        <TouchableOpacity styel={{height:30,width:30,backgroundColor:'#444'}} onPress = {()=>{this.refs.consoleView.setMessage('111')}} >
+      <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}   style={{flex:1}}>
+        <TouchableOpacity styel={{height:30,width:30,backgroundColor:'#444'}} onPress = {()=>{this.refs.consoleView.setMessage({key:'2',value:'4'})}} >
           <Text>4444444</Text>
         </TouchableOpacity>
         <Header/>
@@ -107,7 +107,7 @@ export default class FxList extends Component {
                        selectData={this.selectData}
           />
         </ShowView>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -231,29 +231,30 @@ class ConsoleView extends  PureComponent{
   constructor (props){
     super(props);
     this.state={
-      messages : ['11','22']
+      messages : [{key:'01',value:'0'}]
     }
   }
 
   componentDidMount(){
     for(let i =0; i<10 ;i++){
-      this.setMessage(i+'');
+      this.setMessage({key:i+'',value:i+''});
     }
-
   }
 
   setMessage=(message)=>{
     this.state.messages.push(message);
-    console.log(this.state.messages)
     this.setState({
       messages:this.state.messages
+    },()=>{
+      console.log(this.state.messages)
     });
   }
   renderItem=(item,index)=>{
+    console.log(item)
     return(
-      <View key={index}>
+      <View style={{width:SCREEN_WIDTH}} key={index}>
         <Text>
-          {item}
+          {item.key}
         </Text>
       </View>
     )
